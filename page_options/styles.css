@@ -1,0 +1,139 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    color: black;
+    font-family: "DM Sans", sans-serif;
+}
+
+header, footer {
+    color: black;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background: white;
+    font-family: "Fustat", sans-serif;
+}
+
+header .logo, footer .logo {
+    font-size: 24px;
+    font-weight: bold;
+    font-family: "Fustat", sans-serif;
+    position: relative;
+    display: inline-block;
+}
+
+header .logo img, footer .logo img {
+    width: 30px;
+    height: auto;
+    vertical-align: text-top;
+}
+
+.social-icons {
+    display: flex;
+    align-items: center;
+}
+
+.social-icons a .font {
+    font-family: "Playwrite HU", cursive;
+    font-weight: 400;
+    font-size: 16px;
+    color: black;
+    vertical-align: 0.15rem
+}
+
+.social-icons a {
+    color: black;
+    text-decoration: none;
+    margin-left: 10px;
+    font-size: 25px;
+}
+
+.social-icons a:hover,
+.social-icons a .font:hover {
+    color: rgba(14, 60, 145, 0.811);
+}
+
+.gradient-text {
+    background-image: linear-gradient(to right, #e40082, #00a2e9);
+    -webkit-background-clip: text; /* For Safari/Chrome/iOS */
+    background-clip: text;
+    color: transparent;
+}
+
+h1 {
+    font-size: 40px;
+    margin: 20px 0;
+    font-family: "DM Sans", sans-serif;
+}
+
+main {
+    padding: 50px 20px;
+}
+
+/* Container for options */
+.interview-options {
+    display: flex; /* Align columns side by side */
+    gap: 20px; /* Space between columns */
+    justify-content: center; /* Center the columns */
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    padding: 20px; /* Padding for the section */
+}
+
+.option-link {
+    text-decoration: none; /* Remove underline from links */
+    color: inherit; /* Inherit color from parent */
+    display: block; /* Make the link cover the entire block */
+    position: relative; /* Position relative for pseudo-element */
+}
+
+.option {
+    padding: 20px; /* Padding inside the option */
+    background-color: #f9f9f9; /* Initial background color */
+    border: 2px solid transparent; /* Transparent border initially */
+    border-radius: 10px; /* Rounded corners */
+    position: relative; /* Position relative for pseudo-element */
+    overflow: hidden; /* Hide overflow for pseudo-element */
+    width: 600px; /* Fixed width for each column */
+    box-sizing: border-box; /* Include padding and border in width/height */
+    transition: background-color 0.3s, border 0.3s; /* Smooth transition for background and border */
+}
+
+.option-link:hover .option {
+    background: 
+      linear-gradient(white 0 0) padding-box, 
+      linear-gradient(to right, #e40082, #00a2e9) border-box;
+}
+
+.option h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.option p {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.media {
+    margin-top: 20px;
+}
+
+.media img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+footer {
+    background-color: white;
+    padding: 10px 20px;
+}
+
+@media (max-width: 768px) {
+    .option {
+        max-width: 100%;
+    }
+}

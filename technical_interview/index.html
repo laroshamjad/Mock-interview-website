@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice Interview Questions</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Fustat:wght@200..800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playwrite+HU:wght@100..400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="logo"> 
+            <a href="../home_page/"><img src="../images/rgb.png" alt="Startup Logo"></a>
+            rgb
+        </div>
+        <div class="social-icons">
+            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"> <span class="font"> &lt;/&gt; </span> </a>
+            <a href="https://github.com/Laroshamjad" title="GitHub">
+                <i class="fab fa-github"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/larosh-amjad-718507297/" title="LinkedIn">
+                <i class="fab fa-linkedin"></i>
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <!-- Problem Section -->
+            
+            <div class="problem-section">
+                <div class="tabs-container">
+                    <div class="tabs">
+                        <span class="tab active" data-tab="problem-description">Description</span>
+                        <span class="tab" data-tab="problem-example">Example</span>
+                    </div>
+                    <!-- No button here for problem section -->
+                </div>
+                <div class="tab-content">
+                    <div id="problem-description" class="tab-pane active">
+                        <p>Given an array of integers, return indices of the two numbers such that they add up to a specific target.</p>
+                    </div>
+                    <div id="problem-example" class="tab-pane">
+                        <h3>Example</h3>
+                        <pre>Input: nums = [2,7,11,15], target = 9
+            Output: [0,1]</pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Code Section -->
+            <div class="code-test-container">
+                <div class="code-section">
+                    <div class="tabs-container">
+                        <div class="tabs">
+                            <span class="tab active" data-tab="questions">Questions</span>
+                            <span class="tab" data-tab="code-editor" style="display: none;">Code Editor</span>
+                        </div>
+                        <button id="run-code" class="run-code-btn">Run Code</button>
+                    </div>
+                    <div class="tab-content">
+                        <div id="questions" class="tab-pane active">
+                            <div class="questions-section">
+                                <h3>Before you start coding, answer these questions:</h3>
+                                <form id="questions-form">
+                                    <label for="q1">What approach will you take to solve the problem?</label>
+                                    <textarea id="q1" rows="4"></textarea><br>
+                                    <label for="q2">What edge cases might you encounter?</label>
+                                    <textarea id="q2" rows="4"></textarea><br>
+                                    <label for="q3">How will you ensure your solution is efficient?</label>
+                                    <textarea id="q3" rows="4"></textarea><br>
+                                    <button type="submit">Submit</button>
+                                </form>
+                            </div>
+                        </div>
+                        <div id="code-editor" class="tab-pane">
+                            <div class="code-editor">
+                                <textarea rows="20" placeholder="Write your code here..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Test Case Section -->
+                <div class="test-case-section">
+                    <div class="tabs-container">
+                        <div class="tabs">
+                            <span class="tab active" data-tab="testcase">Testcase</span>
+                            <span class="tab" data-tab="test-result">Test Result</span>
+                        </div>
+                    </div>
+                    <div class="tab-content">
+                        <div id="testcase" class="tab-pane active">
+                            <textarea rows="2">nums = [2,7,11,15]</textarea>
+                            <textarea rows="2">target = 9</textarea>
+                        </div>
+                        <div id="test-result" class="tab-pane">
+                            <p>Run your code to see the result here.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
+    </main>
+
+    <footer>
+        <div class="logo"> 
+            <img src="../images/rgb.png" alt="Startup Logo">
+            rgb
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+        function handleTabClick(event) {
+            const tabId = event.target.getAttribute('data-tab');
+            if (!tabId) return; // Exit if no tab ID is found
+
+            // Get the parent container for tabs
+            const tabsContainer = event.target.closest('.tabs-container');
+            if (!tabsContainer) return;
+
+            // Get the associated tab content
+            const tabContent = tabsContainer.nextElementSibling;
+            if (!tabContent) return;
+
+            // Remove active class from all tabs and panes within this container
+            tabsContainer.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            tabContent.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
+
+            // Add active class to clicked tab and corresponding pane
+            const activeTab = tabsContainer.querySelector(`.tab[data-tab="${tabId}"]`);
+            const activePane = tabContent.querySelector(`#${tabId}`);
+
+            if (activeTab) {
+                activeTab.classList.add('active');
+            }
+
+            if (activePane) {
+                activePane.classList.add('active');
+            }
+        }
+
+        // Handle tab clicks for both sets of tabs
+        document.querySelectorAll('.tabs-container .tab').forEach(tab => {
+            tab.addEventListener('click', handleTabClick);
+        });
+
+        // Handle form submission for Questions tab
+        document.getElementById('questions-form').addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent default form submission behavior
+
+            // Reveal the "Code Editor" tab
+            const codeTab = document.querySelector('.tab[data-tab="code-editor"]');
+            const codePane = document.getElementById('code-editor');
+            const runButton = document.getElementById('run-code');
+
+            // Make sure the Code Editor tab is visible and active
+            if (codeTab) {
+                codeTab.style.display = 'inline-block'; // Show the tab
+                codeTab.classList.add('active'); // Activate the tab
+            }
+
+            // Make sure the Run Code button is visible
+            if (runButton) {
+                runButton.style.display = 'inline-block'; // Show the button
+            }
+
+            // Switch to the "Code Editor" tab immediately after submission
+            const questionsTab = document.querySelector('.tab[data-tab="questions"]');
+            if (questionsTab) {
+                questionsTab.classList.remove('active');
+            }
+
+            // Ensure the questions pane is hidden and the code editor pane is visible
+            const questionsPane = document.getElementById('questions');
+            if (questionsPane) {
+                questionsPane.classList.remove('active');
+            }
+
+            if (codePane) {
+                codePane.classList.add('active'); // Show the code editor pane
+            }
+        });
+    });
+
+
+
+    </script>
+    
+    
+</body>
+</html>

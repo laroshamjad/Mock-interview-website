@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice Interview Questions</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Fustat:wght@200..800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playwrite+HU:wght@100..400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="logo"> 
+            <a href="../home_page/"><img src="../images/rgb.png" alt="Startup Logo"></a>
+            rgb
+        </div>
+        <div class="social-icons">
+            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"> <span class="font"> &lt;/&gt; </span> </a>
+            <a href="https://github.com/Laroshamjad" title="GitHub">
+                <i class="fab fa-github"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/larosh-amjad-718507297/" title="LinkedIn">
+                <i class="fab fa-linkedin"></i>
+            </a>
+        </div>
+    </header>
+
+
+    <main>
+        <div class="flashcard">
+            <h1 id="question-title">Question 1</h1>
+            <p id="question-content">What is your greatest strength?</p>
+
+            <p id="answer-output" class="transcribed-text"></p>
+
+            <hr class="divider"> 
+            <br> 
+            
+            <button id="record-answer" class="icon-button">
+                <span class="gradient-text"><i class="fas fa-microphone icon"></i></span>
+            </button>
+            <p id="answer-output"></p>
+            
+            <button id="next-question" class="arrow-button"><span class="gradient-text">&#8594;</span></button> 
+        </div>  
+        
+        <div class="button-container">
+            <!-- Button will be dynamically added here -->
+        </div>
+    </main>
+
+
+    <footer style="background-color: white;">
+        <div class="logo"> 
+            <img src="../images/rgb.png" alt="Startup Logo">
+            rgb
+        </div>
+    </footer>
+
+    <script>
+        const recordButton = document.getElementById('record-answer');
+        const answerOutput = document.getElementById('answer-output');
+        const nextButton = document.getElementById('next-question');
+        let recognition;
+        let isRecording = false; // Track whether the recording is on or off
+        let fullTranscript = ''; // Variable to store the full transcript
+        let currentQuestionIndex = 0; // Track the current question index
+        const questions = [ // Array of questions
+            { question: "What is your greatest strength?", answer: "" },
+            { question: "Describe a challenging problem you solved.", answer: "" },
+            { question: "Why do you want to work here?", answer: "" }
+        ];
+
+        // Check if browser supports Web Speech API
+        if ('webkitSpeechRecognition' in window) {
+            recognition = new webkitSpeechRecognition();
+            recognition.continuous = true; // Keep recording until the user stops it
+            recognition.interimResults = false; // Only show final result
+            recognition.lang = 'en-US'; // Set the language
+
+            // When speech is detected and converted to text
+            recognition.onresult = function(event) {
+                let newTranscript = '';
+                for (let i = event.resultIndex; i < event.results.length; i++) {
+                    if (event.results[i].isFinal) { // Only process final results
+                        newTranscript += event.results[i][0].transcript;
+                    }
+                }
+                if (newTranscript) {
+                    fullTranscript += newTranscript + ' '; // Append new text to the existing transcript
+                    answerOutput.textContent = fullTranscript; // Display the updated transcript
+                }
+            };
+
+            // Handle errors
+            recognition.onerror = function(event) {
+                console.error('Speech recognition error:', event.error);
+                answerOutput.textContent = 'Error: ' + event.error;
+            };
+
+            // Restart recognition if it stops unexpectedly
+            recognition.onend = function() {
+                if (isRecording) {
+                    recognition.start(); // Restart recognition if it ends
+                }
+            };
+
+            // Toggle start/stop recording when the button is pressed
+            recordButton.addEventListener('click', () => {
+                if (isRecording) {
+                    recognition.stop(); // Stop recording
+                    recordButton.innerHTML = '<span class="gradient-text"><i class="fas fa-microphone icon"></i></span>'; // Mic icon
+                } else {
+                    recognition.start(); // Start recording
+                    recordButton.innerHTML = '<span class="gradient-text"><i class="fas fa-stop icon"></i></span>'; // Stop icon
+                }
+                isRecording = !isRecording; // Toggle recording state
+            });
+        } else {
+            answerOutput.textContent = "Speech recognition not supported in this browser.";
+        }
+
+        // Handle next question button click
+        nextButton.addEventListener('click', () => {
+            // Save the current answer
+            if (currentQuestionIndex < questions.length) {
+                questions[currentQuestionIndex].answer = fullTranscript.trim();
+            }
+
+            // Move to the next question
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                // Display the next question
+                document.getElementById('question-title').textContent = `Question ${currentQuestionIndex + 1}`;
+                document.getElementById('question-content').textContent = questions[currentQuestionIndex].question;
+
+                // Clear the text box
+                fullTranscript = '';
+                answerOutput.textContent = '';
+            } else {
+                // Interview finished
+                document.getElementById('question-title').textContent = 'Congrats on completing the interview!';
+                document.getElementById('question-content').textContent = '';
+
+                // Display all questions and answers
+                let resultsHtml = '<h2>Interview Summary</h2>';
+                questions.forEach((q, index) => {
+                    resultsHtml += `<p><strong>Question ${index + 1}:</strong> ${q.question}</p>`;
+                    resultsHtml += `<p><strong>Answer:</strong> ${q.answer}</p>`;
+                });
+                document.querySelector('.flashcard').innerHTML = resultsHtml;
+
+                // Create the Finish button dynamically
+                const finishButton = document.createElement('button');
+                finishButton.id = 'action-button';
+                finishButton.className = 'review-button';
+                finishButton.textContent = 'Finish';
+                
+                // Add button to the container
+                const buttonContainer = document.querySelector('.button-container');
+                buttonContainer.innerHTML = ''; // Clear previous content if any
+                buttonContainer.appendChild(finishButton);
+
+                // Add event listener for the Finish button
+                finishButton.addEventListener('click', () => {
+                    window.location.href = '../page_options/'; // Redirect to the specified page
+                });
+                
+            }
+        });
+    </script>
+              
+       
+    
+</body>
+</html>
